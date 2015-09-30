@@ -110,6 +110,8 @@ const uint8_t EURO_SYMBOL[] PROGMEM = {
 #define COINDESK    "api.coindesk.com"
 const char COINDESK_REQ[] =
     "GET /v1/bpi/currentprice.json HTTP/1.1\r\n"
+    "User-Agent: ESP8266/0.1\r\n"
+    "Accept: */*\r\n"
     "Host: " COINDESK "\r\n"
     "Connection: close\r\n\r\n";
 
@@ -255,20 +257,22 @@ bool showBitcoin(char *json)
   display.println(yyyymmdd);
   display.println(hhmmss);
 
+  JsonObject& bpi = root["bpi"];
+
   // Show bitcoin exchange rate in US dollars
-  const char *bpi_usd_rate = root["bpi"]["USD"]["rate"];
+  const char *bpi_usd_rate = bpi["USD"]["rate"];
   Serial.println(bpi_usd_rate);
   display.print(F("USD $"));
   display.println(bpi_usd_rate);
 
   // Show bitcoin exchange rate in Great Britain pounds
-  const char *bpi_gbp_rate = root["bpi"]["GBP"]["rate"];
+  const char *bpi_gbp_rate = bpi["GBP"]["rate"];
   Serial.println(bpi_gbp_rate);
   display.print(F("GBP \x9C"));
   display.println(bpi_gbp_rate);
 
   // Show bitcoin exchange rate in EU Euros
-  const char *bpi_eur_rate = root["bpi"]["EUR"]["rate"];
+  const char *bpi_eur_rate = bpi["EUR"]["rate"];
   Serial.println(bpi_eur_rate);
   display.print(F("EUR  "));
   display.drawBitmap(24, 40, EURO_SYMBOL, 5, 7, 1);
