@@ -72,7 +72,7 @@ USB TTL     Huzzah      Nokia 5110  Description
             12          D/C         Output from display data/command to ESP
             #5          CS          Output from ESP to chip select/enable display
             #4          RST         Output from ESP to reset display
-                        LED         3.3V to turn backlight on, GND off
+            15          LED         3.3V to turn backlight on, GND off
 
 GND (blk)   GND                     Ground
 5V  (red)   V+                      5V power from PC or charger
@@ -118,6 +118,10 @@ const char COINDESK_REQ[] =
 void setup()
 {
   Serial.begin(115200);
+
+  // Turn LCD backlight on
+  pinMode(15, OUTPUT);
+  digitalWrite(15, HIGH);
 
   display.begin();
   // init done
