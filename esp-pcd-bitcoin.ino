@@ -150,6 +150,7 @@ void setup()
 
   // text display tests
   display.setTextSize(1);
+  display.setTextWrap(false);
   display.setTextColor(BLACK);
 
   // Prices provided by CoinDesk so give them credit.
@@ -158,7 +159,9 @@ void setup()
   display.println(F("  Powered by"));
   display.println(F("   CoinDesk"));
   display.println();
+  display.setTextWrap(true);
   display.println(F("http://www.coindesk.com/price"));
+  display.setTextWrap(false);
   display.display();
   delay(2000);
 }
@@ -260,6 +263,7 @@ bool showBitcoin(char *json)
   display.clearDisplay();
   display.println(yyyymmdd);
   display.println(hhmmss);
+  display.println();
 
   JsonObject& bpi = root["bpi"];
 
